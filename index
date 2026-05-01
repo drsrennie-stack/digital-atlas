@@ -456,9 +456,9 @@ main {
     <h1>Digital Atlas Library</h1>
     <p class="cover-tagline">A reference series in human anatomy, organized by system and built for visual learning and clinical reasoning.</p>
     <div class="cover-meta">
-      <span id="metaTotal">18 Atlases</span>
+      <span id="metaTotal">19 Atlases</span>
       <span class="dot"></span>
-      <span id="metaAvailable">7 Available</span>
+      <span id="metaAvailable">10 Available</span>
       <span class="dot"></span>
       <span>Updated May 2026</span>
     </div>
@@ -481,7 +481,7 @@ main {
         <button class="pill" data-filter="available" role="tab" aria-selected="false">Available</button>
         <button class="pill" data-filter="coming" role="tab" aria-selected="false">Coming Soon</button>
       </div>
-      <div class="result-count" id="resultCount">Showing 18 of 18 atlases</div>
+      <div class="result-count" id="resultCount">Showing 19 of 19 atlases</div>
     </div>
   </div>
 </section>
@@ -515,8 +515,16 @@ const atlases = [
     keywords: ['anatomical position','body regions','cephalic','cervical','thoracic','abdominal','pelvic','sagittal plane','frontal plane','coronal plane','transverse plane','directional terms','superior','inferior','anterior','posterior','medial','lateral','proximal','distal','superficial','deep','body cavities','dorsal cavity','ventral cavity','thoracic cavity','abdominopelvic cavity','abdominal quadrants','RUQ','LUQ','RLQ','LLQ','retroperitoneum','mediastinum','pleural cavity','pericardial cavity']
   },
   {
-    id: 'histology',
+    id: 'cell',
     order: 2,
+    title: 'Cell Anatomy',
+    description: 'Cell structure and the major organelles, the plasma membrane and its transport mechanisms, cell junctions, and the cell cycle.',
+    status: 'coming',
+    keywords: ['cell theory','cell','animal cell','plasma membrane','cell membrane','phospholipid bilayer','integral proteins','peripheral proteins','glycoproteins','glycolipids','cholesterol','fluid mosaic model','cytoplasm','cytosol','organelles','nucleus','nuclear envelope','nuclear membrane','nuclear pores','nucleolus','chromatin','chromosomes','euchromatin','heterochromatin','mitochondria','mitochondrial matrix','cristae','outer mitochondrial membrane','inner mitochondrial membrane','endoplasmic reticulum','rough ER','smooth ER','ribosomes','free ribosomes','bound ribosomes','Golgi apparatus','Golgi complex','cis face','trans face','lysosomes','peroxisomes','vesicles','secretory vesicles','transport vesicles','cytoskeleton','microfilaments','actin filaments','intermediate filaments','microtubules','centrioles','centrosome','cilia','flagella','microvilli','brush border','cell junctions','tight junctions','gap junctions','desmosomes','adherens junctions','hemidesmosomes','connexons','cell cycle','interphase','G1 phase','S phase','G2 phase','M phase','mitosis','prophase','prometaphase','metaphase','anaphase','telophase','cytokinesis','meiosis','apoptosis','necrosis','passive transport','active transport','simple diffusion','facilitated diffusion','osmosis','tonicity','hypotonic','hypertonic','isotonic','primary active transport','secondary active transport','sodium potassium pump','endocytosis','exocytosis','phagocytosis','pinocytosis','receptor mediated endocytosis','transcription','translation','DNA','RNA','mRNA','tRNA','rRNA','protein synthesis','codon','anticodon']
+  },
+  {
+    id: 'histology',
+    order: 3,
     title: 'Histology',
     description: 'Survey of the four primary tissue types with subtypes of epithelium, connective tissue, cartilage, bone, and blood.',
     status: 'available',
@@ -526,7 +534,7 @@ const atlases = [
   },
   {
     id: 'skin',
-    order: 3,
+    order: 4,
     title: 'Integumentary System',
     description: 'Skin layers and accessory structures, burn assessment with Parkland Formula, and diagnostic skin colors.',
     status: 'available',
@@ -536,7 +544,7 @@ const atlases = [
   },
   {
     id: 'axial-skeleton',
-    order: 4,
+    order: 5,
     title: 'Axial Skeleton',
     description: 'Long bone foundations, vertebral column, skull views, and specialized bones of the head and neck.',
     status: 'available',
@@ -546,7 +554,7 @@ const atlases = [
   },
   {
     id: 'upper-extremity',
-    order: 5,
+    order: 6,
     title: 'Appendicular: Upper Extremity',
     description: 'Pectoral girdle, clavicle, scapula, humerus, forearm, and hand, with joints of the upper limb.',
     status: 'available',
@@ -556,7 +564,7 @@ const atlases = [
   },
   {
     id: 'lower-extremity',
-    order: 6,
+    order: 7,
     title: 'Appendicular: Lower Extremity',
     description: 'Pelvic girdle, femur and patella, tibia and fibula, and the bones of the foot.',
     status: 'available',
@@ -566,7 +574,7 @@ const atlases = [
   },
   {
     id: 'joints',
-    order: 7,
+    order: 8,
     title: 'Joints (Articulations)',
     description: 'Fifteen articulations of the body organized by region, with structural and functional classification, range of motion, and clinical pearls.',
     status: 'available',
@@ -576,27 +584,21 @@ const atlases = [
   },
   {
     id: 'muscles',
-    order: 8,
+    order: 9,
     title: 'Muscular System',
     description: 'Muscle tissue types and major skeletal muscles by region, with origins, insertions, actions, and innervation.',
     status: 'coming',
     keywords: ['skeletal muscle','cardiac muscle','smooth muscle','sarcomere','actin','myosin','myofibril','sarcolemma','neuromuscular junction','origin','insertion','action','agonist','antagonist','synergist','prime mover','frontalis','orbicularis oculi','orbicularis oris','masseter','temporalis','sternocleidomastoid','trapezius','deltoid','pectoralis major','latissimus dorsi','biceps brachii','triceps brachii','brachialis','brachioradialis','rectus abdominis','external oblique','internal oblique','transversus abdominis','diaphragm','gluteus maximus','gluteus medius','quadriceps','rectus femoris','vastus lateralis','vastus medialis','vastus intermedius','hamstrings','biceps femoris','semitendinosus','semimembranosus','gastrocnemius','soleus','tibialis anterior']
   },
   {
-    id: 'neuro-brain',
-    order: 9,
-    title: 'Nervous Tissue and CNS Brain',
-    description: 'Neurons and glia, brain anatomy by lobe and region, and the meningeal layers and ventricular system.',
-    status: 'coming',
-    keywords: ['neurons','dendrites','axons','synapse','myelin','nodes of Ranvier','glia','neuroglia','astrocytes','oligodendrocytes','microglia','ependymal cells','Schwann cells','satellite cells','cerebrum','cerebellum','brainstem','frontal lobe','parietal lobe','temporal lobe','occipital lobe','insula','thalamus','hypothalamus','epithalamus','pineal gland','midbrain','pons','medulla oblongata','meninges','dura mater','arachnoid mater','pia mater','falx cerebri','tentorium cerebelli','ventricles','lateral ventricles','third ventricle','fourth ventricle','cerebrospinal fluid','CSF','choroid plexus','corpus callosum','hippocampus','amygdala','basal ganglia','limbic system','blood brain barrier']
-  },
-  {
-    id: 'spinal-cord',
+    id: 'cns',
     order: 10,
-    title: 'CNS: Spinal Cord',
-    description: 'Spinal cord cross sections, ascending and descending tracts, reflex arcs, and spinal meninges.',
-    status: 'coming',
-    keywords: ['spinal cord','gray matter','white matter','dorsal horn','ventral horn','lateral horn','anterior median fissure','posterior median sulcus','ascending tracts','descending tracts','corticospinal tract','spinothalamic tract','dorsal column','reticulospinal tract','rubrospinal tract','reflex arc','stretch reflex','withdrawal reflex','crossed extensor reflex','cauda equina','conus medullaris','filum terminale','spinal nerves','dorsal root','ventral root','dorsal root ganglion','epidural space','subdural space','subarachnoid space']
+    title: 'Central Nervous System',
+    description: 'Cranial meninges and dural sinuses, the cerebrum by surface and lobe, brain stem and cranial nerves, cerebral vasculature, the ventricular system, and the spinal cord.',
+    status: 'available',
+    plates: 17,
+    sections: 5,
+    keywords: ['central nervous system','CNS','brain','spinal cord','meninges','cranial meninges','spinal meninges','dura mater','arachnoid mater','pia mater','periosteal layer','meningeal layer','epidural space','subdural space','subarachnoid space','arachnoid villi','arachnoid trabeculae','falx cerebri','tentorium cerebelli','tentorial notch','dural venous sinuses','superior sagittal sinus','inferior sagittal sinus','straight sinus','transverse sinus','sigmoid sinus','confluence of sinuses','superior petrosal sinus','cerebrum','cerebral hemispheres','cerebellum','brainstem','frontal lobe','parietal lobe','temporal lobe','occipital lobe','insula','insular cortex','longitudinal fissure','transverse cerebral fissure','central sulcus','lateral sulcus','sylvian fissure','precentral gyrus','postcentral gyrus','primary motor cortex','primary somatosensory cortex','motor homunculus','sensory homunculus','gyri','sulci','corpus callosum','septum pellucidum','fornix','thalamus','hypothalamus','pineal gland','mammillary bodies','optic chiasm','optic nerve','optic tract','olfactory bulb','olfactory tract','parahippocampal gyrus','uncus','cerebral peduncle','crus cerebri','cingulate gyrus','calcarine sulcus','pituitary gland','midbrain','pons','medulla oblongata','cranial nerves','CN I','CN II','CN III','CN IV','CN V','CN VI','CN VII','CN VIII','CN IX','CN X','CN XI','CN XII','olfactory nerve','optic nerve','oculomotor nerve','trochlear nerve','trigeminal nerve','abducens nerve','facial nerve','vestibulocochlear nerve','glossopharyngeal nerve','vagus nerve','accessory nerve','hypoglossal nerve','Circle of Willis','internal carotid artery','anterior cerebral artery','ACA','anterior communicating artery','middle cerebral artery','MCA','posterior communicating artery','posterior cerebral artery','PCA','basilar artery','vertebral artery','PICA','AICA','superior cerebellar artery','anterior spinal artery','ventricles','ventricular system','lateral ventricles','third ventricle','fourth ventricle','interventricular foramen','foramen of Monro','cerebral aqueduct','aqueduct of Sylvius','median aperture','foramen of Magendie','lateral apertures','foramina of Luschka','central canal','cerebrospinal fluid','CSF','choroid plexus','spinal cord','cervical enlargement','lumbar enlargement','conus medullaris','cauda equina','filum terminale','lumbar cistern','dorsal root','dorsal root ganglion','ventral root','spinal nerves','dermatomes','epidural hematoma','subdural hematoma','cerebral venous sinus thrombosis','MCA stroke','ACA stroke','PCA stroke','uncal herniation','bitemporal hemianopia','locked-in syndrome','Wallenberg syndrome','berry aneurysm','subarachnoid hemorrhage','hydrocephalus','lumbar puncture','epidural anesthesia','spinal anesthesia','shingles','postherpetic neuralgia']
   },
   {
     id: 'pns',
@@ -607,8 +609,16 @@ const atlases = [
     keywords: ['cranial nerves','olfactory nerve','optic nerve','oculomotor nerve','trochlear nerve','trigeminal nerve','abducens nerve','facial nerve','vestibulocochlear nerve','glossopharyngeal nerve','vagus nerve','accessory nerve','hypoglossal nerve','cervical plexus','brachial plexus','lumbar plexus','sacral plexus','phrenic nerve','median nerve','ulnar nerve','radial nerve','musculocutaneous nerve','axillary nerve','sciatic nerve','femoral nerve','obturator nerve','tibial nerve','common fibular nerve','sympathetic nervous system','parasympathetic nervous system','autonomic nervous system','ANS','sympathetic chain','ganglia']
   },
   {
-    id: 'endocrine',
+    id: 'lymphatic',
     order: 12,
+    title: 'Lymphatic and Immune System',
+    description: 'Lymphatic vessels and ducts, lymph nodes, the spleen and thymus, mucosa-associated lymphoid tissue, and the cells and antibodies of innate and adaptive immunity.',
+    status: 'coming',
+    keywords: ['lymphatic system','immune system','lymph','lymphatic vessels','lymphatic capillaries','lymphatic trunks','lymphatic ducts','thoracic duct','right lymphatic duct','cisterna chyli','lymph nodes','cortex','medulla','paracortex','germinal centers','lymphoid follicles','afferent lymphatic vessel','efferent lymphatic vessel','spleen','white pulp','red pulp','splenic cords','splenic sinusoids','splenic capsule','thymus','thymic cortex','thymic medulla','Hassall corpuscles','tonsils','palatine tonsils','lingual tonsils','pharyngeal tonsils','adenoids','tubal tonsils','MALT','mucosa-associated lymphoid tissue','GALT','gut-associated lymphoid tissue','BALT','bronchus-associated lymphoid tissue','Peyer patches','vermiform appendix','lymphocytes','B cells','T cells','helper T cells','CD4 T cells','cytotoxic T cells','CD8 T cells','regulatory T cells','natural killer cells','NK cells','plasma cells','memory cells','dendritic cells','macrophages','neutrophils','eosinophils','basophils','mast cells','antigen presenting cells','APC','innate immunity','adaptive immunity','humoral immunity','cell mediated immunity','antibodies','immunoglobulins','IgG','IgA','IgM','IgE','IgD','complement system','MHC class I','MHC class II','cytokines','interleukins','interferons','inflammation','vaccination','active immunity','passive immunity','axillary lymph nodes','cervical lymph nodes','inguinal lymph nodes','mesenteric lymph nodes','lymphedema','lymphadenopathy','lymphadenitis','lymphoma','Hodgkin lymphoma','non-Hodgkin lymphoma','leukemia','splenectomy','splenomegaly','autoimmune disease','allergic reaction','anaphylaxis','HIV','immunodeficiency']
+  },
+  {
+    id: 'endocrine',
+    order: 13,
     title: 'Endocrine System',
     description: 'Endocrine glands, target tissues, and the major hormone axes that regulate growth, metabolism, and stress.',
     status: 'coming',
@@ -616,7 +626,7 @@ const atlases = [
   },
   {
     id: 'cv-heart',
-    order: 13,
+    order: 14,
     title: 'Cardiovascular: Heart',
     description: 'Chambers, valves, conduction system, coronary circulation, and the pericardial layers.',
     status: 'available',
@@ -626,7 +636,7 @@ const atlases = [
   },
   {
     id: 'cv-vessels',
-    order: 14,
+    order: 15,
     title: 'Cardiovascular: Blood Vessels',
     description: 'Vessel histology and gross anatomy of arteries and veins, beginning with the head, neck, and upper extremity.',
     status: 'available',
@@ -636,7 +646,7 @@ const atlases = [
   },
   {
     id: 'respiratory',
-    order: 15,
+    order: 16,
     title: 'Respiratory System',
     description: 'Upper and lower respiratory tracts, lung anatomy, pleural membranes, and the mechanics of ventilation.',
     status: 'coming',
@@ -644,7 +654,7 @@ const atlases = [
   },
   {
     id: 'gi',
-    order: 16,
+    order: 17,
     title: 'Gastrointestinal System',
     description: 'Alimentary canal from mouth to anus, accessory digestive organs, and peritoneal relationships.',
     status: 'coming',
@@ -652,7 +662,7 @@ const atlases = [
   },
   {
     id: 'renal',
-    order: 17,
+    order: 18,
     title: 'Urinary System',
     description: 'Kidneys, ureters, bladder, and urethra, with detailed nephron anatomy and the filtration membrane.',
     status: 'coming',
@@ -660,7 +670,7 @@ const atlases = [
   },
   {
     id: 'reproductive',
-    order: 18,
+    order: 19,
     title: 'Reproductive System',
     description: 'Male and female reproductive anatomy, accessory structures, and the mammary glands.',
     status: 'coming',
