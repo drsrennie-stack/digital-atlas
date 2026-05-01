@@ -460,7 +460,7 @@ main {
       <span class="dot"></span>
       <span id="metaAvailable">7 Available</span>
       <span class="dot"></span>
-      <span>Updated April 2026</span>
+      <span>Updated May 2026</span>
     </div>
   </div>
 </header>
@@ -619,16 +619,20 @@ const atlases = [
     order: 13,
     title: 'Cardiovascular: Heart',
     description: 'Chambers, valves, conduction system, coronary circulation, and the pericardial layers.',
-    status: 'coming',
-    keywords: ['heart','right atrium','left atrium','right ventricle','left ventricle','interatrial septum','interventricular septum','tricuspid valve','mitral valve','bicuspid valve','pulmonary valve','aortic valve','semilunar valves','atrioventricular valves','chordae tendineae','papillary muscles','SA node','sinoatrial node','AV node','atrioventricular node','bundle of His','bundle branches','Purkinje fibers','coronary arteries','left coronary artery','right coronary artery','LAD','circumflex artery','coronary sinus','pericardium','fibrous pericardium','serous pericardium','myocardium','endocardium','epicardium','apex','base of heart']
+    status: 'available',
+    plates: 20,
+    sections: 4,
+    keywords: ['heart','right atrium','left atrium','right ventricle','left ventricle','interatrial septum','interventricular septum','tricuspid valve','mitral valve','bicuspid valve','pulmonary valve','aortic valve','semilunar valves','atrioventricular valves','chordae tendineae','papillary muscles','SA node','sinoatrial node','AV node','atrioventricular node','bundle of His','bundle branches','Purkinje fibers','coronary arteries','left coronary artery','right coronary artery','LAD','circumflex artery','coronary sinus','pericardium','fibrous pericardium','serous pericardium','myocardium','endocardium','epicardium','apex','base of heart','fossa ovalis','ligamentum arteriosum','trabeculae carneae','pectinate muscles','mediastinum','great vessels','superior vena cava','inferior vena cava','pulmonary trunk','aorta','ascending aorta','aortic arch','brachiocephalic trunk']
   },
   {
     id: 'cv-vessels',
     order: 14,
     title: 'Cardiovascular: Blood Vessels',
-    description: 'Major arteries and veins of systemic and pulmonary circulation, capillary beds, and special circulations.',
-    status: 'coming',
-    keywords: ['arteries','veins','capillaries','arterioles','venules','aorta','ascending aorta','aortic arch','descending aorta','thoracic aorta','abdominal aorta','superior vena cava','inferior vena cava','pulmonary artery','pulmonary vein','common carotid artery','internal carotid','external carotid','subclavian artery','vertebral artery','brachial artery','radial artery','ulnar artery','femoral artery','popliteal artery','tibial artery','jugular vein','brachiocephalic vein','iliac artery','iliac vein','hepatic portal vein','circle of Willis','tunica intima','tunica media','tunica externa','tunica adventitia','anastomosis','fetal circulation','ductus arteriosus','foramen ovale']
+    description: 'Vessel histology and gross anatomy of arteries and veins, beginning with the head, neck, and upper extremity.',
+    status: 'available',
+    plates: 12,
+    sections: 4,
+    keywords: ['arteries','veins','capillaries','arterioles','venules','tunica intima','tunica media','tunica externa','tunica adventitia','internal elastic lamina','external elastic lamina','elastic lamellae','vasa vasorum','endothelium','smooth muscle','muscular artery','elastic artery','large artery','small artery','arteriole','venule','vein wall','vein histology','neurovascular bundle','aorta','ascending aorta','aortic arch','descending aorta','thoracic aorta','abdominal aorta','superior vena cava','inferior vena cava','pulmonary artery','pulmonary vein','common carotid artery','internal carotid','external carotid','facial artery','facial vein','subclavian artery','subclavian vein','vertebral artery','axillary artery','axillary vein','brachial artery','brachial vein','radial artery','radial vein','ulnar artery','ulnar vein','cephalic vein','basilic vein','median cubital vein','jugular vein','internal jugular vein','external jugular vein','brachiocephalic vein','brachiocephalic trunk','iliac artery','iliac vein','hepatic portal vein','circle of Willis','anastomosis','fetal circulation','ductus arteriosus','foramen ovale','varicose veins','atherosclerosis','aortic dissection','venipuncture','central venous access','Allen test','SVC syndrome']
   },
   {
     id: 'respiratory',
