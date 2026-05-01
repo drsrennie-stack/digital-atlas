@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIO 004 Digital Atlas Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #15264A;
+  --terracotta: #C25E3A;
+  --gold: #B89968;
+  --white: #FFFFFF;
+  --paper: #FAFAF7;
+  --hairline: #E8E2D3;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lora', Georgia, serif;
+  background: var(--paper);
+  color: var(--navy);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* COVER */
+.cover {
+  background: var(--navy);
+  color: var(--white);
+  padding: 88px 24px 64px;
+  text-align: center;
+  border-bottom: 6px solid var(--terracotta);
+  position: relative;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(184, 153, 104, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(194, 94, 58, 0.06) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.cover-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.cover-eyebrow {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  font-weight: 600;
+}
+
+.cover h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 9vw, 108px);
+  line-height: 0.92;
+  letter-spacing: 0.015em;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.cover-tagline {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: clamp(16px, 1.8vw, 19px);
+  max-width: 640px;
+  margin: 0 auto 36px;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.cover-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 10px 22px;
+  border: 1px solid rgba(184, 153, 104, 0.4);
+  border-radius: 999px;
+}
+
+.cover-meta .dot {
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* CONTROLS */
+.controls {
+  position: sticky;
+  top: 0;
+  background: rgba(250, 250, 247, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 20;
+  border-bottom: 1px solid var(--hairline);
+  padding: 20px 24px;
+}
+
+.controls-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--navy);
+  opacity: 0.45;
+  pointer-events: none;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.search-wrap:focus-within .search-icon {
+  color: var(--terracotta);
+  opacity: 1;
+}
+
+#search {
+  width: 100%;
+  padding: 15px 48px 15px 50px;
+  border: 1.5px solid var(--hairline);
+  border-radius: 6px;
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  background: var(--white);
+  color: var(--navy);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+#search::placeholder {
+  color: var(--navy);
+  opacity: 0.45;
+  font-style: italic;
+}
+
+#search:focus {
+  outline: none;
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 3px rgba(194, 94, 58, 0.12);
+}
+
+.search-clear {
+  position: absolute;
+  right: 14px;
+  background: var(--hairline);
+  color: var(--navy);
+  border: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  transition: background 0.15s;
+}
+
+.search-clear:hover { background: var(--gold); color: var(--white); }
+.search-clear.visible { display: flex; }
+
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 1.5px solid var(--hairline);
+  background: transparent;
+  color: var(--navy);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pill:hover { border-color: var(--gold); color: var(--gold); }
+
+.pill.active {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
+
+.pill.active:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.result-count {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--navy);
+  opacity: 0.6;
+  font-weight: 500;
+}
+
+/* MAIN GRID */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  padding: 28px 26px 22px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  min-height: 240px;
+}
+
+.card.available::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 0;
+  background: var(--terracotta);
+  transition: height 0.2s ease;
+}
+
+.card.available:hover {
+  transform: translateY(-3px);
+  border-color: var(--terracotta);
+  box-shadow: 0 10px 24px rgba(21, 38, 74, 0.09);
+}
+
+.card.available:hover::before { height: 4px; }
+
+.card.available:hover .card-cta { gap: 8px; }
+
+.card.coming {
+  background: var(--paper);
+  border-left: 4px solid var(--gold);
+  border-top: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  cursor: default;
+}
+
+.card.coming .card-title { opacity: 0.85; }
+
+.card-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
+.card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  line-height: 1.05;
+  letter-spacing: 0.015em;
+  margin-bottom: 12px;
+  color: var(--navy);
+  font-weight: 400;
+}
+
+.card-description {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--navy);
+  opacity: 0.78;
+  margin-bottom: 22px;
+  flex-grow: 1;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.card-stats { color: var(--navy); opacity: 0.65; }
+
+.card-cta {
+  color: var(--terracotta);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s ease;
+}
+
+.card.coming .card-cta { color: var(--gold); }
+
+.coming-badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: var(--gold);
+  color: var(--white);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+
+.no-results {
+  padding: 80px 24px;
+  text-align: center;
+  color: var(--navy);
+}
+
+.no-results-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+  color: var(--navy);
+}
+
+.no-results-hint {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 15px;
+  opacity: 0.7;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* COLOPHON */
+.colophon {
+  background: var(--navy);
+  color: var(--white);
+  padding: 48px 24px 40px;
+  text-align: center;
+  border-top: 6px solid var(--terracotta);
+}
+
+.colophon-inner { max-width: 800px; margin: 0 auto; }
+
+.colophon-eyebrow {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.colophon-text {
+  font-family: 'Lora', serif;
+  font-size: 14px;
+  line-height: 1.65;
+  opacity: 0.85;
+  margin-bottom: 18px;
+}
+
+.signature {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--gold);
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 600px) {
+  .cover { padding: 64px 20px 48px; }
+  main { padding: 36px 16px 60px; }
+  .grid { grid-template-columns: 1fr; gap: 16px; }
+  .card { padding: 24px 22px 18px; min-height: 220px; }
+  .controls { padding: 16px; }
+  .filter-pills { width: 100%; justify-content: flex-start; }
+  .controls-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">Solano Community College &middot; BIO 004</div>
+    <h1>Digital Atlas Library</h1>
+    <p class="cover-tagline">A reference series in human anatomy, organized by system and built for visual learning and clinical reasoning.</p>
+    <div class="cover-meta">
+      <span id="metaTotal">18 Atlases</span>
+      <span class="dot"></span>
+      <span id="metaAvailable">7 Available</span>
+      <span class="dot"></span>
+      <span>Updated April 2026</span>
+    </div>
+  </div>
+</header>
+
+<section class="controls" aria-label="Search and filter">
+  <div class="controls-inner">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="search" id="search" placeholder="Search structures or systems (try femur, scaphoid, epidermis, foramen magnum)" autocomplete="off" spellcheck="false">
+      <button class="search-clear" id="searchClear" aria-label="Clear search" type="button">&times;</button>
+    </div>
+    <div class="controls-row">
+      <div class="filter-pills" role="tablist">
+        <button class="pill active" data-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="pill" data-filter="available" role="tab" aria-selected="false">Available</button>
+        <button class="pill" data-filter="coming" role="tab" aria-selected="false">Coming Soon</button>
+      </div>
+      <div class="result-count" id="resultCount">Showing 18 of 18 atlases</div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="grid" id="grid" role="list"></div>
+  <div class="no-results" id="noResults" style="display:none;">
+    <div class="no-results-title">No matches</div>
+    <p class="no-results-hint">Try a broader term such as <em>bone</em>, <em>tissue</em>, <em>nerve</em>, or <em>vessel</em>. Atlases marked Coming Soon are searchable by their planned content.</p>
+  </div>
+</main>
+
+<footer class="colophon">
+  <div class="colophon-inner">
+    <div class="colophon-eyebrow">BIO 004 Human Anatomy</div>
+    <p class="colophon-text">A growing library of static reference atlases for visual learners. Each volume can be read in sequence or used as an exam-prep companion. Plates are designed to print cleanly at home.</p>
+    <p class="signature">Curated by Dr. Sharilyn Rennie</p>
+  </div>
+</footer>
+
+<script>
+const atlases = [
+  {
+    id: 'intro',
+    order: 1,
+    title: 'Intro to Anatomy',
+    description: 'Foundational vocabulary: body regions, planes, directional terms, cavities, and abdominal mapping.',
+    status: 'available',
+    plates: 11,
+    sections: 1,
+    keywords: ['anatomical position','body regions','cephalic','cervical','thoracic','abdominal','pelvic','sagittal plane','frontal plane','coronal plane','transverse plane','directional terms','superior','inferior','anterior','posterior','medial','lateral','proximal','distal','superficial','deep','body cavities','dorsal cavity','ventral cavity','thoracic cavity','abdominopelvic cavity','abdominal quadrants','RUQ','LUQ','RLQ','LLQ','retroperitoneum','mediastinum','pleural cavity','pericardial cavity']
+  },
+  {
+    id: 'histology',
+    order: 2,
+    title: 'Histology',
+    description: 'Survey of the four primary tissue types with subtypes of epithelium, connective tissue, cartilage, bone, and blood.',
+    status: 'available',
+    plates: 36,
+    sections: 6,
+    keywords: ['epithelial tissue','simple squamous','stratified squamous','simple cuboidal','simple columnar','pseudostratified columnar','transitional epithelium','glands','exocrine','endocrine','connective tissue','fibroblasts','fibrocytes','adipocytes','mast cells','macrophages','collagen fibers','elastic fibers','reticular fibers','mesenchyme','mucous CT','loose connective tissue','dense regular','dense irregular','areolar','adipose tissue','reticular tissue','cartilage','hyaline cartilage','elastic cartilage','fibrocartilage','compact bone','spongy bone','osteon','lamellae','lacunae','canaliculi','blood','erythrocytes','leukocytes','platelets','neutrophils','lymphocytes','monocytes','eosinophils','basophils']
+  },
+  {
+    id: 'skin',
+    order: 3,
+    title: 'Integumentary System',
+    description: 'Skin layers and accessory structures, burn assessment with Parkland Formula, and diagnostic skin colors.',
+    status: 'available',
+    plates: 13,
+    sections: 3,
+    keywords: ['epidermis','dermis','hypodermis','subcutaneous','stratum corneum','stratum lucidum','stratum granulosum','stratum spinosum','stratum basale','papillary layer','reticular layer','melanocytes','keratinocytes','Langerhans cells','Merkel cells','hair follicle','sebaceous gland','sweat gland','eccrine','apocrine','arrector pili','nail','burns','first-degree burn','second-degree burn','third-degree burn','fourth-degree burn','partial thickness','full thickness','Rule of Nines','Parkland Formula','cyanosis','jaundice','erythema','pallor']
+  },
+  {
+    id: 'axial-skeleton',
+    order: 4,
+    title: 'Axial Skeleton',
+    description: 'Long bone foundations, vertebral column, skull views, and specialized bones of the head and neck.',
+    status: 'available',
+    plates: 34,
+    sections: 5,
+    keywords: ['axial skeleton','long bone','diaphysis','epiphysis','metaphysis','periosteum','endosteum','medullary cavity','articular cartilage','epiphyseal plate','vertebral column','cervical vertebrae','thoracic vertebrae','lumbar vertebrae','sacrum','coccyx','atlas','axis','dens','odontoid process','primary curvatures','secondary curvatures','kyphosis','lordosis','scoliosis','intervertebral disc','skull','frontal bone','parietal bone','temporal bone','occipital bone','sphenoid bone','ethmoid bone','sagittal suture','coronal suture','lambdoid suture','squamous suture','fontanels','anterior fontanel','posterior fontanel','foramen magnum','sella turcica','cribriform plate','crista galli','mandible','maxilla','hyoid bone','auditory ossicles','malleus','incus','stapes','orbit','nasal cavity','paranasal sinuses','mental foramen','supraorbital foramen','ligamentum nuchae']
+  },
+  {
+    id: 'upper-extremity',
+    order: 5,
+    title: 'Appendicular: Upper Extremity',
+    description: 'Pectoral girdle, clavicle, scapula, humerus, forearm, and hand, with joints of the upper limb.',
+    status: 'available',
+    plates: 13,
+    sections: 6,
+    keywords: ['appendicular skeleton','upper extremity','upper limb','pectoral girdle','shoulder girdle','clavicle','sternal end','acromial end','conoid tubercle','scapula','shoulder blade','acromion','coracoid process','glenoid fossa','glenoid cavity','subscapular fossa','supraspinous fossa','infraspinous fossa','spine of scapula','suprascapular notch','sternoclavicular joint','acromioclavicular joint','glenohumeral joint','manubriosternal joint','sternal angle','humerus','head of humerus','anatomical neck','surgical neck','greater tubercle','lesser tubercle','intertubercular groove','bicipital groove','deltoid tuberosity','radial groove','spiral groove','lateral supracondylar ridge','medial supracondylar ridge','lateral epicondyle','medial epicondyle','capitulum','trochlea','coronoid fossa','radial fossa','olecranon fossa','ulnar groove','ulna','olecranon','trochlear notch','coronoid process','radial notch','ulnar tuberosity','styloid process','radius','radial head','articular fovea','radial tuberosity','ulnar notch','hand','manus','carpus','metacarpus','phalanges','carpals','scaphoid','lunate','triquetrum','pisiform','trapezium','trapezoid','capitate','hamate','anatomical snuffbox','metacarpals','proximal phalanges','middle phalanges','distal phalanges','opposable thumb','rotator cuff','SITS muscles','supraspinatus','infraspinatus','teres minor','subscapularis']
+  },
+  {
+    id: 'lower-extremity',
+    order: 6,
+    title: 'Appendicular: Lower Extremity',
+    description: 'Pelvic girdle, femur and patella, tibia and fibula, and the bones of the foot.',
+    status: 'available',
+    plates: 11,
+    sections: 4,
+    keywords: ['appendicular skeleton','lower extremity','lower limb','pelvic girdle','coxal bone','os coxae','hip bone','ilium','ischium','pubis','pubic symphysis','sacroiliac joint','iliac crest','ASIS','AIIS','PSIS','PIIS','anterior superior iliac spine','anterior inferior iliac spine','posterior superior iliac spine','posterior inferior iliac spine','acetabulum','obturator foramen','greater sciatic notch','lesser sciatic notch','ischial spine','ischial tuberosity','pubic tubercle','superior pubic ramus','inferior pubic ramus','ischial ramus','wing of ilium','body of ilium','pelvic inlet','pelvic outlet','femur','head of femur','fovea capitis','neck of femur','greater trochanter','lesser trochanter','intertrochanteric crest','intertrochanteric line','gluteal tuberosity','linea aspera','supracondylar lines','popliteal surface','lateral condyle','medial condyle','lateral epicondyle','medial epicondyle','intercondylar fossa','patella','sesamoid bone','Q angle','tibia','intercondylar eminence','tibial tuberosity','anterior crest','fibular notch','medial malleolus','fibula','head of fibula','lateral malleolus','foot','tarsals','calcaneus','talus','navicular','cuboid','medial cuneiform','middle cuneiform','intermediate cuneiform','lateral cuneiform','metatarsals','proximal phalanx','middle phalanx','distal phalanx','hallux','great toe','longitudinal arch','transverse arch']
+  },
+  {
+    id: 'joints',
+    order: 7,
+    title: 'Joints (Articulations)',
+    description: 'Fifteen articulations of the body organized by region, with structural and functional classification, range of motion, and clinical pearls.',
+    status: 'available',
+    plates: 15,
+    sections: 3,
+    keywords: ['joints','articulations','fibrous joints','cartilaginous joints','synovial joints','sutures','syndesmosis','gomphosis','synchondrosis','symphysis','synarthrosis','amphiarthrosis','diarthrosis','plane joint','planar joint','hinge joint','pivot joint','condyloid joint','condylar joint','saddle joint','ball and socket joint','synovial fluid','articular capsule','bursa','tendon sheath','flexion','extension','abduction','adduction','rotation','circumduction','pronation','supination','inversion','eversion','dorsiflexion','plantarflexion','elevation','depression','protraction','retraction','lateral excursion','gliding','temporomandibular joint','TMJ','TMD','atlanto-occipital joint','atlanto-axial joint','zygapophyseal joint','Z joint','facet joint','sternoclavicular joint','SC joint','acromioclavicular joint','AC joint','AC separation','manubriosternal joint','sternal angle','angle of Louis','glenohumeral joint','shoulder joint','Bankart lesion','Hill-Sachs lesion','radioulnar joint','proximal radioulnar joint','distal radioulnar joint','nursemaid elbow','sacroiliac joint','SI joint','pubic symphysis','pubic diastasis','acetabulofemoral joint','hip joint','knee joint','femorotibial joint','patellofemoral joint','anterior cruciate ligament','ACL','posterior cruciate ligament','PCL','medial collateral ligament','MCL','lateral collateral ligament','LCL','medial meniscus','lateral meniscus','quadriceps tendon','patellar ligament','unhappy triad','tibiofibular joint','proximal tibiofibular joint','distal tibiofibular joint','Maisonneuve fracture','talocrural joint','ankle joint','high ankle sprain','low ankle sprain','occipital condyles','dens','transverse ligament','annular ligament','glenoid labrum']
+  },
+  {
+    id: 'muscles',
+    order: 8,
+    title: 'Muscular System',
+    description: 'Muscle tissue types and major skeletal muscles by region, with origins, insertions, actions, and innervation.',
+    status: 'coming',
+    keywords: ['skeletal muscle','cardiac muscle','smooth muscle','sarcomere','actin','myosin','myofibril','sarcolemma','neuromuscular junction','origin','insertion','action','agonist','antagonist','synergist','prime mover','frontalis','orbicularis oculi','orbicularis oris','masseter','temporalis','sternocleidomastoid','trapezius','deltoid','pectoralis major','latissimus dorsi','biceps brachii','triceps brachii','brachialis','brachioradialis','rectus abdominis','external oblique','internal oblique','transversus abdominis','diaphragm','gluteus maximus','gluteus medius','quadriceps','rectus femoris','vastus lateralis','vastus medialis','vastus intermedius','hamstrings','biceps femoris','semitendinosus','semimembranosus','gastrocnemius','soleus','tibialis anterior']
+  },
+  {
+    id: 'neuro-brain',
+    order: 9,
+    title: 'Nervous Tissue and CNS Brain',
+    description: 'Neurons and glia, brain anatomy by lobe and region, and the meningeal layers and ventricular system.',
+    status: 'coming',
+    keywords: ['neurons','dendrites','axons','synapse','myelin','nodes of Ranvier','glia','neuroglia','astrocytes','oligodendrocytes','microglia','ependymal cells','Schwann cells','satellite cells','cerebrum','cerebellum','brainstem','frontal lobe','parietal lobe','temporal lobe','occipital lobe','insula','thalamus','hypothalamus','epithalamus','pineal gland','midbrain','pons','medulla oblongata','meninges','dura mater','arachnoid mater','pia mater','falx cerebri','tentorium cerebelli','ventricles','lateral ventricles','third ventricle','fourth ventricle','cerebrospinal fluid','CSF','choroid plexus','corpus callosum','hippocampus','amygdala','basal ganglia','limbic system','blood brain barrier']
+  },
+  {
+    id: 'spinal-cord',
+    order: 10,
+    title: 'CNS: Spinal Cord',
+    description: 'Spinal cord cross sections, ascending and descending tracts, reflex arcs, and spinal meninges.',
+    status: 'coming',
+    keywords: ['spinal cord','gray matter','white matter','dorsal horn','ventral horn','lateral horn','anterior median fissure','posterior median sulcus','ascending tracts','descending tracts','corticospinal tract','spinothalamic tract','dorsal column','reticulospinal tract','rubrospinal tract','reflex arc','stretch reflex','withdrawal reflex','crossed extensor reflex','cauda equina','conus medullaris','filum terminale','spinal nerves','dorsal root','ventral root','dorsal root ganglion','epidural space','subdural space','subarachnoid space']
+  },
+  {
+    id: 'pns',
+    order: 11,
+    title: 'Peripheral Nervous System',
+    description: 'Cranial nerves, spinal nerve plexuses, and the autonomic nervous system divisions.',
+    status: 'coming',
+    keywords: ['cranial nerves','olfactory nerve','optic nerve','oculomotor nerve','trochlear nerve','trigeminal nerve','abducens nerve','facial nerve','vestibulocochlear nerve','glossopharyngeal nerve','vagus nerve','accessory nerve','hypoglossal nerve','cervical plexus','brachial plexus','lumbar plexus','sacral plexus','phrenic nerve','median nerve','ulnar nerve','radial nerve','musculocutaneous nerve','axillary nerve','sciatic nerve','femoral nerve','obturator nerve','tibial nerve','common fibular nerve','sympathetic nervous system','parasympathetic nervous system','autonomic nervous system','ANS','sympathetic chain','ganglia']
+  },
+  {
+    id: 'endocrine',
+    order: 12,
+    title: 'Endocrine System',
+    description: 'Endocrine glands, target tissues, and the major hormone axes that regulate growth, metabolism, and stress.',
+    status: 'coming',
+    keywords: ['hypothalamus','pituitary gland','anterior pituitary','posterior pituitary','adenohypophysis','neurohypophysis','thyroid gland','parathyroid glands','adrenal glands','adrenal cortex','adrenal medulla','pancreas','islets of Langerhans','alpha cells','beta cells','delta cells','pineal gland','thymus','gonads','ovaries','testes','hormones','growth hormone','TSH','ACTH','prolactin','oxytocin','ADH','vasopressin','insulin','glucagon','cortisol','aldosterone','epinephrine','norepinephrine','thyroxine','T3','T4','calcitonin','parathyroid hormone','PTH','melatonin']
+  },
+  {
+    id: 'cv-heart',
+    order: 13,
+    title: 'Cardiovascular: Heart',
+    description: 'Chambers, valves, conduction system, coronary circulation, and the pericardial layers.',
+    status: 'coming',
+    keywords: ['heart','right atrium','left atrium','right ventricle','left ventricle','interatrial septum','interventricular septum','tricuspid valve','mitral valve','bicuspid valve','pulmonary valve','aortic valve','semilunar valves','atrioventricular valves','chordae tendineae','papillary muscles','SA node','sinoatrial node','AV node','atrioventricular node','bundle of His','bundle branches','Purkinje fibers','coronary arteries','left coronary artery','right coronary artery','LAD','circumflex artery','coronary sinus','pericardium','fibrous pericardium','serous pericardium','myocardium','endocardium','epicardium','apex','base of heart']
+  },
+  {
+    id: 'cv-vessels',
+    order: 14,
+    title: 'Cardiovascular: Blood Vessels',
+    description: 'Major arteries and veins of systemic and pulmonary circulation, capillary beds, and special circulations.',
+    status: 'coming',
+    keywords: ['arteries','veins','capillaries','arterioles','venules','aorta','ascending aorta','aortic arch','descending aorta','thoracic aorta','abdominal aorta','superior vena cava','inferior vena cava','pulmonary artery','pulmonary vein','common carotid artery','internal carotid','external carotid','subclavian artery','vertebral artery','brachial artery','radial artery','ulnar artery','femoral artery','popliteal artery','tibial artery','jugular vein','brachiocephalic vein','iliac artery','iliac vein','hepatic portal vein','circle of Willis','tunica intima','tunica media','tunica externa','tunica adventitia','anastomosis','fetal circulation','ductus arteriosus','foramen ovale']
+  },
+  {
+    id: 'respiratory',
+    order: 15,
+    title: 'Respiratory System',
+    description: 'Upper and lower respiratory tracts, lung anatomy, pleural membranes, and the mechanics of ventilation.',
+    status: 'coming',
+    keywords: ['nasal cavity','nasal conchae','paranasal sinuses','pharynx','nasopharynx','oropharynx','laryngopharynx','larynx','epiglottis','vocal cords','glottis','thyroid cartilage','cricoid cartilage','trachea','carina','primary bronchi','secondary bronchi','tertiary bronchi','bronchioles','terminal bronchioles','respiratory bronchioles','alveolar ducts','alveoli','type I pneumocytes','type II pneumocytes','surfactant','lungs','right lung','left lung','lobes','fissures','hilum','pleura','visceral pleura','parietal pleura','pleural cavity','diaphragm','intercostal muscles','external intercostals','internal intercostals']
+  },
+  {
+    id: 'gi',
+    order: 16,
+    title: 'Gastrointestinal System',
+    description: 'Alimentary canal from mouth to anus, accessory digestive organs, and peritoneal relationships.',
+    status: 'coming',
+    keywords: ['oral cavity','tongue','teeth','salivary glands','parotid gland','submandibular gland','sublingual gland','pharynx','esophagus','lower esophageal sphincter','stomach','cardia','fundus','body of stomach','pylorus','rugae','small intestine','duodenum','jejunum','ileum','large intestine','cecum','appendix','ascending colon','transverse colon','descending colon','sigmoid colon','rectum','anal canal','liver','hepatic lobes','gallbladder','pancreas','peritoneum','mesentery','greater omentum','lesser omentum','retroperitoneal organs','villi','microvilli','plicae circulares','haustra','taeniae coli']
+  },
+  {
+    id: 'renal',
+    order: 17,
+    title: 'Urinary System',
+    description: 'Kidneys, ureters, bladder, and urethra, with detailed nephron anatomy and the filtration membrane.',
+    status: 'coming',
+    keywords: ['kidney','renal cortex','renal medulla','renal pyramids','renal columns','renal pelvis','major calyces','minor calyces','renal capsule','perirenal fat','nephron','glomerulus','Bowman capsule','glomerular capsule','renal corpuscle','proximal convoluted tubule','PCT','distal convoluted tubule','DCT','collecting duct','loop of Henle','descending limb','ascending limb','juxtaglomerular apparatus','macula densa','podocytes','filtration membrane','ureters','urinary bladder','detrusor muscle','trigone','urethra','internal urethral sphincter','external urethral sphincter','renal artery','renal vein','peritubular capillaries','vasa recta']
+  },
+  {
+    id: 'reproductive',
+    order: 18,
+    title: 'Reproductive System',
+    description: 'Male and female reproductive anatomy, accessory structures, and the mammary glands.',
+    status: 'coming',
+    keywords: ['testes','seminiferous tubules','epididymis','vas deferens','ductus deferens','ejaculatory duct','seminal vesicles','prostate gland','bulbourethral glands','Cowper glands','penis','scrotum','spermatic cord','inguinal canal','ovaries','ovarian follicles','fallopian tubes','uterine tubes','fimbriae','uterus','fundus of uterus','body of uterus','cervix','vagina','vulva','labia majora','labia minora','clitoris','endometrium','myometrium','perimetrium','mammary glands','breast','lactiferous ducts','spermatogenesis','oogenesis','gametogenesis','menstrual cycle']
+  }
+];
+
+const grid = document.getElementById('grid');
+const searchInput = document.getElementById('search');
+const searchClear = document.getElementById('searchClear');
+const resultCount = document.getElementById('resultCount');
+const noResults = document.getElementById('noResults');
+const pills = document.querySelectorAll('.pill');
+const metaTotal = document.getElementById('metaTotal');
+const metaAvailable = document.getElementById('metaAvailable');
+
+let currentFilter = 'all';
+let currentQuery = '';
+
+const totalCount = atlases.length;
+const availableCount = atlases.filter(a => a.status === 'available').length;
+metaTotal.textContent = totalCount + ' Atlases';
+metaAvailable.textContent = availableCount + ' Available';
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function renderCards() {
+  const query = currentQuery.toLowerCase().trim();
+
+  const filtered = atlases.filter(atlas => {
+    if (currentFilter === 'available' && atlas.status !== 'available') return false;
+    if (currentFilter === 'coming' && atlas.status !== 'coming') return false;
+
+    if (query) {
+      const haystack = [
+        atlas.title.toLowerCase(),
+        atlas.description.toLowerCase(),
+        atlas.keywords.join(' ').toLowerCase()
+      ].join(' ');
+      if (!haystack.includes(query)) return false;
+    }
+    return true;
+  });
+
+  filtered.sort((a, b) => a.order - b.order);
+
+  if (filtered.length === 0) {
+    grid.style.display = 'none';
+    noResults.style.display = 'block';
+    resultCount.textContent = 'No matches';
+    return;
+  }
+
+  grid.style.display = 'grid';
+  noResults.style.display = 'none';
+
+  grid.innerHTML = filtered.map(atlas => {
+    const isAvailable = atlas.status === 'available';
+    const tag = isAvailable ? 'a' : 'div';
+    const hrefAttr = isAvailable ? 'href="' + atlas.id + '.html"' : '';
+    const stats = isAvailable
+      ? atlas.plates + ' Plates &middot; ' + atlas.sections + ' Section' + (atlas.sections > 1 ? 's' : '')
+      : atlas.keywords.length + ' Topics Indexed';
+    const cta = isAvailable ? 'Open &rarr;' : 'In Development';
+    const badge = isAvailable ? '' : '<span class="coming-badge">Coming Soon</span>';
+    const orderStr = String(atlas.order).padStart(2, '0');
+    const cls = isAvailable ? 'available' : 'coming';
+
+    return '<' + tag + ' ' + hrefAttr + ' class="card ' + cls + '" role="listitem">' +
+      badge +
+      '<div class="card-number">No. ' + orderStr + '</div>' +
+      '<h2 class="card-title">' + escapeHtml(atlas.title) + '</h2>' +
+      '<p class="card-description">' + escapeHtml(atlas.description) + '</p>' +
+      '<div class="card-footer">' +
+        '<span class="card-stats">' + stats + '</span>' +
+        '<span class="card-cta">' + cta + '</span>' +
+      '</div>' +
+    '</' + tag + '>';
+  }).join('');
+
+  const word = filtered.length === 1 ? 'atlas' : 'atlases';
+  resultCount.textContent = 'Showing ' + filtered.length + ' of ' + totalCount + ' ' + word;
+}
+
+searchInput.addEventListener('input', function(e) {
+  currentQuery = e.target.value;
+  searchClear.classList.toggle('visible', currentQuery.length > 0);
+  renderCards();
+});
+
+searchClear.addEventListener('click', function() {
+  searchInput.value = '';
+  currentQuery = '';
+  searchClear.classList.remove('visible');
+  searchInput.focus();
+  renderCards();
+});
+
+pills.forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    pills.forEach(function(p) {
+      p.classList.remove('active');
+      p.setAttribute('aria-selected', 'false');
+    });
+    pill.classList.add('active');
+    pill.setAttribute('aria-selected', 'true');
+    currentFilter = pill.dataset.filter;
+    renderCards();
+  });
+});
+
+renderCards();
+
+// Iframe height sender for Kajabi embedding
+(function() {
+  function sendHeight() {
+    var height = Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight
+    );
+    if (window.parent !== window) {
+      window.parent.postMessage({
+        type: 'iframeHeight',
+        id: 'digital-atlas-index',
+        height: height
+      }, '*');
+    }
+  }
+  sendHeight();
+  if (typeof ResizeObserver !== 'undefined') {
+    var ro = new ResizeObserver(sendHeight);
+    ro.observe(document.body);
+  }
+  window.addEventListener('load', sendHeight);
+  window.addEventListener('resize', sendHeight);
+  setInterval(sendHeight, 1000);
+})();
+</script>
+</body>
+</html>
